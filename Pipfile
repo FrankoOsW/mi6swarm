@@ -1,0 +1,38 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://gitlab-ci-token:${CI_JOB_TOKEN}@git.naspersclassifieds.com/api/v4/projects/41581/packages/pypi/simple"
+verify_ssl = true
+name = "olx-pypi"
+
+[packages]
+fastapi = "==0.111.0"
+uvicorn = {extras = ["standard"], version = "==0.29.0"}
+structlog = "==24.2.0"
+newrelic = "==9.11.0"
+asgi-correlation-id = "==4.3.1"
+sentry-sdk = {extras = ["fastapi"], version = "==2.7.1"}
+sniffio = "*"
+python-otel = {version = "*", index = "olx-pypi"}
+
+[dev-packages]
+flake8 = "==6.0.0"
+pylint = "==2.17.3"
+black = "==22.3.0"
+isort = "==5.12.0"
+sqlalchemy = "==2.0.22"
+trino = "==0.327"
+jupyter = "==1.0.0"
+notebook = "==7.0.5"
+ipython = "==8.16.1"
+python-dotenv = "==1.0.0"
+ipykernel = "*"
+pyright = "*"
+pytest = "*"
+pytest-cov = "*"
+
+[requires]
+python_version = "3.11"

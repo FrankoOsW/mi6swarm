@@ -1,0 +1,33 @@
+variables:
+  KANIKO_IMAGE_TAG: '$CI_COMMIT_SHORT_SHA'
+  KANIKO_DOCKERFILE: '$CI_PROJECT_DIR/Dockerfile'
+  KANIKO_CONTEXT: '$CI_PROJECT_DIR'
+  KANIKO_REGISTRY_IMAGE: '$CI_REGISTRY_IMAGE'
+  KANIKO_ADDITIONAL_ARGS: ''
+
+.kaniko:
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $KANIKO_CONTEXT --dockerfile $KANIKO_DOCKERFILE --destination $KANIKO_REGISTRY_IMAGE:$KANIKO_IMAGE_TAG --destination $KANIKO_REGISTRY_IMAGE:latest --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} $KANIKO_ADDITIONAL_ARGS
+
+.kaniko_branch:
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $KANIKO_CONTEXT --dockerfile $KANIKO_DOCKERFILE --destination $KANIKO_REGISTRY_IMAGE:$KANIKO_IMAGE_TAG --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} $KANIKO_ADDITIONAL_ARGS
+
+.kaniko-ecr:
+  extends: .kaniko
+  script:
+    - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
+   
+build:container-image-master:
+  stage: build
+  extends:
+    - .run_on_master
+    - .kaniko

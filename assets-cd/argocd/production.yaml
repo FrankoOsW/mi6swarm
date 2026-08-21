@@ -1,0 +1,39 @@
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify this file directly.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mi6swarm
+  annotations:
+    olx.com/apm_application_name: "mi6swarm-production"
+    olx.com/newrelic_account_id: "3100679"
+  labels:
+    opslevel-dependency-of: "01a0253d-8aa3-7ace-b3e6-2eab04e5f96f"
+    environment: production
+spec:
+  destination:
+    name: eu-data-k8s-production
+    namespace: mi6swarm
+  project: mi6swarm
+  source:
+    helm:
+      parameters:
+      - name: imageRegistry
+        value: registry.naspersclassifieds.com/olxeu/mi6/mi6swarm
+      - name: serviceSlug
+        value: mi6swarm
+      releaseName: mi6swarm
+      valueFiles:
+      - environments/production/values.yaml
+      - environments/production/custom-values.yaml
+      ignoreMissingValueFiles: true
+    path: assets-cd/kubernetes/
+    repoURL: https://git.naspersclassifieds.com/olxeu/mi6/mi6swarm.git
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        elbv2.k8s.aws/pod-readiness-gate-inject: enabled
+    syncOptions:
+    - CreateNamespace=true

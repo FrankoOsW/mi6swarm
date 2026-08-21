@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./app:/service/app:ro
+    ports:
+      - "8000:8000"
+    command: ["--reload"]

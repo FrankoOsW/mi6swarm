@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://app.opslevel.com/public/schemas/opslevel.schema.yml
+---
+version: 1
+service:
+  name: mi6swarm
+  owner: 6ce1a074-94fa-4d85-93bd-66745316047b
+  lifecycle: poc
+  tier: tier_4
+  description: Internal AI agent swarm for Data Analysts. Provides natural language interface to query competitive data across GitLab ETL code, Confluence documentation, and vendor specs. Features supervisor agent with domain routing to Traffic and autoplac.pl specialists. Synthesizes knowledge that would otherwise require hours of manual searching.
+  properties:
+    creation_source: ServiceShaper
+  aliases:
+    - 01a0253d-8aa3-7ace-b3e6-2eab04e5f96f
+  repositories:
+    - name: olxeu/mi6/mi6swarm
+      path: "/"
+      provider: gitlab
+      display_name: mi6swarm
+  tags:
+        - key: business_unit
+          value: "OLX"
+        - key: business_unit_id
+          value: "57f344db-41a4-4938-a521-ad07148760e0"
+        - key: customer_unit
+          value: "Data"
+        - key: customer_unit_id
+          value: "a0f1c3e6-774c-429a-8fe4-d5a701bb4a59"
+        - key: environment
+          value: "production"
+        - key: lifecycle
+          value: "poc"
+        - key: managedby
+          value: "https://git.naspersclassifieds.com/olxeu/mi6/mi6swarm"
+        - key: opslevel-dependency-of
+          value: "01a0253d-8aa3-7ace-b3e6-2eab04e5f96f"
+        - key: pillar_or_tribe
+          value: "Domain_Data_Engineering"
+        - key: pillar_or_tribe_id
+          value: "9a8a3206-8df5-4d22-bc64-0c3d45ddfa02"
+        - key: service_id
+          value: "01a0253d-8aa3-7ace-b3e6-2eab04e5f96f"
+        - key: service_name
+          value: "mi6swarm"
+        - key: stream
+          value: "Data"
+        - key: stream_id
+          value: "a0f1c3e6-774c-429a-8fe4-d5a701bb4a59"
+        - key: team_id
+          value: "6ce1a074-94fa-4d85-93bd-66745316047b"
+        - key: team_name
+          value: "Core_DW_and_BI"
+        - key: tier
+          value: "tier_4"
+        - key: unified_renovate
+          value: daily
+  tools: 
+    - name: ArgoCD App Production
+      category: deployment
+      url: https://eu-data.argocd.prd.eu.olx.org/applications/mi6swarm
+      environment: production
+    - name: ArgoCD App Staging
+      category: deployment
+      url: https://eu-data.argocd.stg.eu.olx.org/applications/mi6swarm
+      environment: staging

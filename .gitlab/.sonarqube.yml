@@ -1,0 +1,44 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/sonarqube-integration-template
+#
+# To extend GitLab CI: Create new .yml files in the .gitlab/ directory of your service repository.
+#
+
+credential_scanner_scan:
+  # rules from main gitlab integration template
+  extends: .run_on_master_mr_except_deprovisioning
+  stage: analyze
+  image: registry.naspersclassifieds.com/security/security-sast-scanners/credential-scanner:v0-latest
+  variables:
+    GIT_DEPTH: 0
+  allow_failure: true
+  script: ["/root/entrypoint.sh"]
+  needs: []
+
+semgrep_scan:
+  # rules from main gitlab integration template
+  extends: .run_on_master_mr_except_deprovisioning
+  stage: analyze
+  image: registry.naspersclassifieds.com/security/security-sast-scanners/semgrep:v0-latest
+  variables:
+    GIT_DEPTH: 0
+  allow_failure: true
+  script: ["/root/entrypoint.sh"]
+  artifacts:
+    paths:
+      - ./${SUBDIRECTORY:+$SUBDIRECTORY/}${CI_PROJECT_NAME//\//-}-semgrep-dalek.json
+  needs: []
+
+sonarqube:
+  # rules from main gitlab integration template
+  extends: .run_on_master_mr_except_deprovisioning
+  stage: security
+  image: registry.naspersclassifieds.com/security/security-sast-scanners/sonarqube:v0-latest
+  variables:
+    GIT_DEPTH: 0
+    CI_PROJECT_NAME: "mi6swarm"
+    PROJECT_KEY: 01a0253d-8aa3-7ace-b3e6-2eab04e5f96f
+  allow_failure: true
+  script: ["/root/entrypoint.sh"]
+  needs: []

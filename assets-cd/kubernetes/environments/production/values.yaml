@@ -1,0 +1,165 @@
+#
+# Mercury engine info .BuiltIn.RDSIntegration.Enabled: false
+# Mercury engine info .BuiltIn.RDSIntegration.Engine: 
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify this file directly.
+# To customize values: Create a custom-values.yaml file in this directory for overrides.
+# In custom values you reference exaclty the same keys as in this file, for example, to add an environment variable to the container you can add in custom-values.yaml:
+# applications:
+#   mi6swarm:
+#     containers:
+#       app:
+#         envs:
+#           NEW_ENV_VAR: "value"
+#
+
+packName: svc # required by common chart
+imagePullPolicy: IfNotPresent
+
+# ADR-0048
+labelEnvironment: production
+labelOpslevelDependencyOf: 01a0253d-8aa3-7ace-b3e6-2eab04e5f96f
+
+applicationConfig:
+  SERVICE_PORT: "8000"
+  NEW_RELIC_APP_NAME: mi6swarm-production
+  APPLICATION_ENVIRONMENT: production
+  ENV: PRD
+  SENTRY_TRACES_SAMPLE_RATE: "0.01"
+  SENTRY_PROFILES_SAMPLE_RATE: "0.01"
+  OTEL_SERVICE_NAME: mi6swarm-production
+  OTEL_SERVICE_ENVIRONMENT: production
+  OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: delta
+  OTEL_EXPORTER_OTLP_INSECURE: "true"
+
+applications:
+  mi6swarm:
+    controller: deployment
+    gitlabDockerAuth: false
+    serviceAccountName: mi6swarm
+    deploymentUseGlobalImageVariables: true
+    rollout:
+      enabled: false
+    containers:
+      app:
+        # Overriding the "env" key replaces the entire array.
+        # Copy all entries if you need to customize it.
+        env:
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_UID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "http://$(HOST_IP):4317"
+          - name: OTEL_RESOURCE_ATTRIBUTES
+            value: "k8s.pod.uid=$(POD_UID),service.instance.id=$(POD_UID),deployment.environment.name=production,service.namespace=mi6swarm"
+        image: "registry.naspersclassifieds.com/olxeu/mi6/mi6swarm:latest"
+        resources:
+          limits:
+            cpu: "600m"
+            memory: "500Mi"
+          requests:
+            cpu: "200m"
+            memory: "500Mi"
+        ports:
+          - containerPort: 8000
+            name: app
+            protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: app
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: app
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        startupProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: app
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+    securityContext:
+      enabled: false
+    nodeSelector:
+      group: eu-data-k8s-workers
+    tolerations:
+      - effect: PreferNoSchedule
+        key: group
+        operator: Equal
+        value: eu-data-k8s-workers
+    topologySpreadConstraints: soft
+    autoscaling:
+      enabled: true
+      minReplicas: "3"
+      maxReplicas: "10"
+    pdb:
+      enabled: true
+      spec:
+        maxUnavailable: 1
+    scaledObject:
+      enabled: false
+    service:
+      type: ClusterIP
+      reusePodPortsBlock: true
+      container: app
+      customPorts: {}
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 5%
+    maxSurge: 20%
+
+eso:
+  enabled: true
+  autoInjectSecrets: true
+  secretName: mi6swarm
+  esoRoleArn: "arn:aws:iam::021427824859:role/mi6swarm-eso-eu-west-1"
+
+logging:
+  enabled: true
+  streamName: mi6swarm
+  region: eu-west-1
+  awsAccountId: "555677789327"
+
+envName: production
+serviceIAMRoleARN: "arn:aws:iam::021427824859:role/mi6swarm-irsa-eu-west-1"
+migrations:
+  enable: false
+
+createServiceAccount: mi6swarm
+
+namespace:
+  labels:
+    environment: production
+    opslevel-dependency-of: 01a0253d-8aa3-7ace-b3e6-2eab04e5f96f
+
+tooling:
+  enable: true

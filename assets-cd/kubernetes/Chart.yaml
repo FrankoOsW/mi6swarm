@@ -1,0 +1,13 @@
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify this file directly.
+apiVersion: v2
+name: mi6swarm
+description: A chart for mi6swarm
+type: application
+version: 1.0.0
+dependencies:
+  - name: common-resource-templates
+    version: "18.7.0"
+    repository: "https://git.naspersclassifieds.com/api/v4/projects/4113/packages/helm/stable"

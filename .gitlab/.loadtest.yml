@@ -1,0 +1,14 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/generic-perftesting-integration-templat
+#
+# ⚠️ DO NOT modify this file directly.
+.loadtest:
+  rules:
+    - when: never
+  allow_failure: true
+  script:
+    - echo "Ingress disabled - loadtest not applicable"
+
+loadtest:
+  extends: .loadtest

@@ -1,0 +1,87 @@
+# This file is maintained by S2. DON'T EDIT MANUALLY! Go to https://service-shaper.prd.eu.olx.org/home/services/01a0253d-8aa3-7ace-b3e6-2eab04e5f96f to make changes.
+apiVersion: 1
+service:
+  uid: 01a0253d-8aa3-7ace-b3e6-2eab04e5f96f
+  tier: tier_4
+  lifecycle: poc
+  owner: 6ce1a074-94fa-4d85-93bd-66745316047b
+  maintainers:
+  - 91b18d07-1088-491d-a863-523b2321af79
+  template:
+    uid: 66bab517-0d04-11ef-a14f-fe35587486b0
+    project_id: 37350
+    name: Python FastAPI App
+    ref: refs/tags/v9.1.5
+    integration_templates:
+    - project_id: 35913
+      ref: refs/tags/v6.5.5
+      name: Atlantis
+      type: infrastructure
+    - project_id: 35914
+      ref: refs/tags/v10.1.1
+      name: ArgoCD
+      type: gitops
+    - project_id: 38552
+      ref: refs/tags/v5.3.0
+      name: RDS
+      type: rds
+    - project_id: 39103
+      ref: refs/tags/v1.3.0
+      name: CDN
+      type: cdn
+    - project_id: 35911
+      ref: refs/tags/v1.3.2
+      name: Gitlab
+      type: deployment
+    - project_id: 35912
+      ref: refs/tags/v1.6.0
+      name: OpsLevel
+      type: developer_portal
+    - project_id: 37015
+      ref: refs/tags/v2.0.0
+      name: SonarQube
+      type: sast
+    - project_id: 36490
+      ref: refs/tags/v1.0.0
+      name: Kaniko
+      type: build
+    - project_id: 41664
+      ref: refs/tags/v1.0.9
+      name: Docker
+      type: build
+    - project_id: 41117
+      ref: refs/tags/v1.1.0
+      name: Custom Infrastructure Integration Template
+      type: generic
+    - project_id: 41659
+      ref: refs/tags/v1.0.14
+      name: Ingress perftest
+      type: test
+    - project_id: 41550
+      ref: refs/tags/v1.0.0
+      name: Elasticache integration
+      type: elasticache
+  infrastructureConfiguration:
+    rds:
+      enabled: false
+    elasticache:
+      enabled: false
+    ingress:
+      enabled: false
+      schema: ""
+      cdn_enabled: false
+      staging:
+        prefix_list_ids: []
+        custom_ip_lists: []
+      production:
+        prefix_list_ids: []
+        custom_ip_lists: []
+    gen_ai:
+      enabled: false
+      budget: 0
+      business_value: ""
+    notification_center:
+      enabled: false
+  workloads:
+    service_workers: []
+    cron_jobs: []

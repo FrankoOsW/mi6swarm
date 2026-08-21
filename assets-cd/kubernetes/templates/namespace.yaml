@@ -1,0 +1,25 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify existing template files.
+# To add custom manifests: Create new .yaml files in this templates/ directory.
+#
+
+apiVersion: "v1"
+kind: "Namespace"
+metadata:
+  name: {{ .Values.serviceSlug }}
+  labels:
+    elbv2.k8s.aws/pod-readiness-gate-inject: enabled
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    name: {{ .Values.serviceSlug }}
+    {{- toYaml .Values.namespace.labels | nindent 4 }}
+
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
+
+spec:
+  finalizers:
+    - kubernetes

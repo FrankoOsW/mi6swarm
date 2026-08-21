@@ -1,0 +1,100 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify existing template files.
+# To add custom manifests: Create new .yaml files in this templates/ directory.
+#
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: {{ .Values.serviceIAMRoleARN }}
+    argocd.argoproj.io/sync-wave: "-90"
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: unified-argo-workflows
+  namespace: {{ .Values.serviceSlug }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: unified-argo-workflows-role
+  namespace: {{ .Values.serviceSlug }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-90"
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups:
+  - argoproj.io
+  resources:
+  - workflowtaskresults
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - workflowtasksets
+  - workflowartifactgctasks
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - workflowtasksets/status
+  - workflowartifactgctasks/status
+  verbs:
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: unified-argo-workflows-rolebinding
+  namespace: {{ .Values.serviceSlug }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-90"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: unified-argo-workflows-role
+subjects:
+- kind: ServiceAccount
+  name: unified-argo-workflows
+  namespace: {{ .Values.serviceSlug }}
+{{- if and .Values.migrations.enable .Values.eso.enabled }}
+- kind: ServiceAccount
+  name: {{ .Values.eso.secretName }}-flyway
+  namespace: {{ .Values.serviceSlug }}
+{{- end }}

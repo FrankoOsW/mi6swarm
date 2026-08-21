@@ -1,0 +1,56 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/gitlab-integration-template
+#
+# To extend GitLab CI: Create new .yml files in the .gitlab/ directory of your service repository.
+#
+# yaml-language-server: $schema=https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json
+
+include:
+  - ".gitlab/**.yml"
+
+stages:
+  - pre-build
+  - build-binary
+  - test
+  - build
+  - docker
+  - analyze
+  - security
+  - pre-deploy-staging
+  - deploy-staging
+  - post-deploy-staging
+  - pre-deploy-production
+  - deploy-production
+  - post-deploy-production
+
+.run_on_master_and_mr:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == "merge_request_event"
+
+.run_on_master:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+.run_on_mr:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+.run_on_hotfix:
+  rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^hotfix\/.*$/ && $CI_PIPELINE_SOURCE == "merge_request_event"
+
+.run_on_master_and_mr_and_hotfix:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^hotfix\/.*$/ && $CI_PIPELINE_SOURCE == "merge_request_event")
+
+.run_on_master_and_hotfix:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || ($CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^hotfix\/.*$/ && $CI_PIPELINE_SOURCE == "merge_request_event")
+
+.run_on_master_mr_except_deprovisioning:
+  rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /chore\/remove-infrastructure/
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always

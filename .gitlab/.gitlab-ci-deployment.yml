@@ -1,0 +1,79 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# To extend GitLab CI: Create new .yml files in the .gitlab/ directory of your service repository.
+#
+# yaml-language-server: $schema=https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json
+
+variables:
+  S2_ARGOCD_DEPLOY_TIMEOUT: 600
+  S2_ARGOCD_APP_GIT_URL: ${CI_PROJECT_URL}.git
+  S2_ARGOCD_IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+  S2_ARGOCD_APP_NAME: mi6swarm
+  S2_ARGOCD_PROJECT_NAME: mi6swarm
+
+.argocd-base:
+  dependencies: []
+  image: registry.naspersclassifieds.com/infrastructure/europe/olxeu-pipeline-images/argocd:latest
+
+.argocd-init:
+  before_script:
+    - >
+      argocd repo add
+      "${S2_ARGOCD_APP_GIT_URL}"
+      --server "${S2_ARGOCD_SERVER}"
+      --auth-token "${S2_ARGOCD_AUTH_TOKEN}"
+      --name "${S2_ARGOCD_APP_NAME}"
+      --project "${S2_ARGOCD_PROJECT_NAME}"
+      --username "${CI_DEPLOY_USER}"
+      --password "${CI_DEPLOY_PASSWORD}"
+      --upsert
+    - >
+      argocd app create
+      ${S2_ARGOCD_APP_NAME}
+      --server "${S2_ARGOCD_SERVER}"
+      --auth-token "${S2_ARGOCD_AUTH_TOKEN}"
+      -f assets-cd/argocd/${CI_ENVIRONMENT_NAME}.yaml
+      --helm-set-string "imageTag=${S2_ARGOCD_IMAGE_TAG}"
+      --upsert
+
+.argocd-deploy:
+  script:
+    - argocd app sync --server "${S2_ARGOCD_SERVER}" --auth-token "${S2_ARGOCD_AUTH_TOKEN}" --prune "${S2_ARGOCD_APP_NAME}" --revision "${CI_COMMIT_SHA}"
+    - argocd app wait "${S2_ARGOCD_APP_NAME}" --server "${S2_ARGOCD_SERVER}" --auth-token "${S2_ARGOCD_AUTH_TOKEN}" --timeout "${S2_ARGOCD_DEPLOY_TIMEOUT}" --health
+
+.argocd-staging:
+  environment:
+    name: staging
+  variables:
+    S2_ARGOCD_SERVER: eu-data.argocd.stg.eu.olx.org
+
+.argocd-production:
+  environment:
+    name: production
+  variables:
+    S2_ARGOCD_SERVER: eu-data.argocd.prd.eu.olx.org
+
+apply:staging:
+  stage: deploy-staging
+  extends:
+    # TODO: add here templating logic to decide from s2 level which rules should allow deployment
+    - .run_on_master
+
+    - .argocd-base
+    - .argocd-init
+    - .argocd-deploy
+    - .argocd-staging
+
+apply:production:
+  stage: deploy-production
+  extends:
+    # TODO: add here templating logic to decide from s2 level which rules should allow deployment
+    - .run_on_master
+
+    - .argocd-base
+    - .argocd-init
+    - .argocd-deploy
+    - .argocd-production
+  when: manual

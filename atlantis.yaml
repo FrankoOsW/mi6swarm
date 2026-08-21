@@ -1,0 +1,52 @@
+---
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/atlantis-integration-template
+# do not modify this file directly, in case you need anything raise MR to the template directly.
+# current workflow source: https://git.naspersclassifieds.com/infrastructure/europe/olxeu-pipeline-images/-/blob/master/atlantis/repos.yaml?ref_type=heads
+version: 3
+abort_on_execution_order_fail: true
+projects:
+  - &base_terragrunt
+    apply_requirements: [ approved ]
+    terraform_version: v1.11.7
+    terraform_distribution: opentofu
+    workflow: terragrunt
+    dir: template_value_be_overriden
+    autoplan:
+      enabled: true
+      when_modified:
+        - "../../../sources/**/*.tf"
+        - "./**/*.hcl"
+        - "./**/*.tf"
+        - "./**/*.tfvars"
+        - "./**/*.yaml"
+        - "../../../../../bootstrapping_complete.tf"
+        - "../../../../../decommissioning_trigger.tf"
+
+  - <<: *base_terragrunt
+    name: core-staging-eu-west-1
+    dir: assets-cd/core/environments/staging/eu-west-1
+
+  - <<: *base_terragrunt
+    name: core-production-eu-west-1
+    dir: assets-cd/core/environments/production/eu-west-1
+
+  - <<: *base_terragrunt
+    name: logging-staging-eu-west-1
+    dir: assets-cd/logging/environments/staging/eu-west-1
+
+  - <<: *base_terragrunt
+    name: logging-production-eu-west-1
+    dir: assets-cd/logging/environments/production/eu-west-1
+
+  - <<: *base_terragrunt
+    name: custom-infrastructure-staging-eu-west-1
+    dir: assets-cd/custom-infrastructure/environments/staging/eu-west-1
+
+  - <<: *base_terragrunt
+    name: custom-infrastructure-production-eu-west-1
+    dir: assets-cd/custom-infrastructure/environments/production/eu-west-1
+
+  - <<: *base_terragrunt
+    name: monitoring
+    dir: assets-cd/monitoring/environments/production/eu-west-1

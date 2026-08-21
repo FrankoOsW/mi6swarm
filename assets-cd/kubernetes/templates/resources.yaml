@@ -1,0 +1,9 @@
+#
+# This file is auto-generated from a template.
+# Template: https://git.naspersclassifieds.com/olxeu/core-tech/core-tech-devx/s2-integration-templates/argocd-integration-template
+#
+# ⚠️ DO NOT modify existing template files.
+# To add custom manifests: Create new .yaml files in this templates/ directory.
+#
+
+{{ include "common.resources.all" . }}
