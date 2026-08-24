@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>olxeu/core-tech/core-tech-devx/unified-renovate/shared-config-presets:s2"
+  ],
+  "prHourlyLimit": 20,
+  "prConcurrentLimit": 10,
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "assignees": [
+    "service_account_group_442_978e84db507d5d246f48ab6c31d2d8b1"
+  ],
+  "labels": [
+    "renovate",
+    "dependencies"
+  ]
+}
