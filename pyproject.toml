@@ -3,6 +3,19 @@ DJANGO_SETTINGS_MODULE = "config.settings.base"
 pythonpath = ["src"]
 filterwarnings = ["ignore::DeprecationWarning"]
 
+[tool.coverage.run]
+omit = [
+    "src/manage.py",
+    "src/config/wsgi.py",
+    "src/config/settings/production.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
+
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = []
