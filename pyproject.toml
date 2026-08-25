@@ -1,4 +1,6 @@
 [tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.base"
+pythonpath = ["src"]
 filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.ruff]
