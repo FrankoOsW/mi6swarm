@@ -1,17 +1,22 @@
-from fastapi.testclient import TestClient
-
-from src.main import app
-
-client = TestClient(app)
+import pytest
+from django.test import Client
 
 
-def test_root():
+@pytest.fixture
+def client():
+    return Client()
+
+
+def test_root(client):
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json()["message"] == "Hello, World!"
+    data = response.json()
+    assert data["service"] == "mi6swarm"
+    assert data["status"] == "ok"
 
 
-def test_health():
+def test_health(client):
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json()["status"] == "healthy"
+    data = response.json()
+    assert data["status"] == "healthy"
