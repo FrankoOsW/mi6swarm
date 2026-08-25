@@ -23,9 +23,9 @@ WORKDIR /opt/app
 # Copy the requirements file
 COPY Pipfile Pipfile.lock ./
 
-# Install the dependencies
+# Install the dependencies (using Pipfile, CI_JOB_TOKEN provides olx-pypi access)
 RUN pip install --quiet --no-cache-dir pipenv \
- && pipenv install -q --deploy --ignore-pipfile
+ && pipenv install -q
 
 # Copy the application code
 COPY ./src /opt/app/src/
@@ -36,5 +36,5 @@ RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.
 # Expose the port (required by ServiceShaper)
 EXPOSE 8000
 
-# Run the application with gunicorn (OTEL instrumentation handled by olx_otel_lib)
-ENTRYPOINT ["pipenv", "run", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
+# Run the application with gunicorn + OTEL instrumentation
+ENTRYPOINT ["pipenv", "run", "opentelemetry-instrument", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
