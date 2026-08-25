@@ -7,7 +7,12 @@
     - pipenv install --dev
     - export PYTHONPATH=$(which python):$PYTHONPATH
   script:
-    - pipenv run pytest tests/* --cov=src/ --cov-report=term --cov-report=html --cov-fail-under=80 -vvv
+    - pipenv run pytest tests/* --cov=src/ --cov-report=term --cov-report=html --cov-report=xml --cov-fail-under=80 -vvv
+  artifacts:
+    paths:
+      - coverage.xml
+      - htmlcov/
+    expire_in: 1 week
 
 unit_tests:
   stage: test
