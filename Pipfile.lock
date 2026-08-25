@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "910d5ce74ecdded30ca19f39a5081ae4a0e6969fb693f78820ab92e0db95ea93"
+            "sha256": "f35d76cba32239571e81a6040a89d2c9feddb77952e554a438242ef88b3a6b2b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -416,6 +416,24 @@
             "markers": "python_version >= '3.8'",
             "version": "==0.48b0"
         },
+        "opentelemetry-instrumentation-django": {
+            "hashes": [
+                "sha256:d31fca8bdf5a75e004a459f2eb3fcba707fbb0a39fc3d3c520c38265775cb9df",
+                "sha256:e6742744ee1cfbfee8a6b57182a2071475531b79863411e1eb5f0d5b5322b7b4"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.48b0"
+        },
+        "opentelemetry-instrumentation-wsgi": {
+            "hashes": [
+                "sha256:1a1e752367b0df4397e0b835839225ef5c2c3c053743a261551af13434fc4d51",
+                "sha256:c6051124d741972090fe94b2fa302555e1e2a22e9cdda32dd39ed49a5b34e0c6"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.48b0"
+        },
         "opentelemetry-proto": {
             "hashes": [
                 "sha256:33c9345d91dafd8a74fc3d7576c5a38f18b7fdf8d02983ac67485386132aedd6",
@@ -436,6 +454,14 @@
             "hashes": [
                 "sha256:12d74983783b6878162208be57c9effcb89dc88691c64992d70bb89dc00daa1a",
                 "sha256:a0de9f45c413a8669788a38569c7e0a11ce6ce97861a628cca785deecdc32a1f"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==0.48b0"
+        },
+        "opentelemetry-util-http": {
+            "hashes": [
+                "sha256:60312015153580cc20f322e5cdc3d3ecad80a71743235bdb77716e742814623c",
+                "sha256:76f598af93aab50328d2a69c786beaedc8b6a7770f7a818cc307eb353debfffb"
             ],
             "markers": "python_version >= '3.8'",
             "version": "==0.48b0"

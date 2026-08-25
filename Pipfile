@@ -17,12 +17,14 @@ whitenoise = "==6.7.0"
 # Database
 psycopg = {extras = ["binary", "pool"], version = "==3.2.1"}
 
-# Observability (keep from FastAPI template)
+# Observability
 structlog = "==24.2.0"
 newrelic = "==9.11.0"
 sentry-sdk = {extras = ["django"], version = "==2.7.1"}
 opentelemetry-distro = "==0.48b0"
 opentelemetry-exporter-otlp = "==1.27.0"
+opentelemetry-instrumentation-django = "==0.48b0"
+opentelemetry-instrumentation-wsgi = "==0.48b0"
 
 # Utils
 python-dotenv = "==1.0.0"
