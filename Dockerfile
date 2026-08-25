@@ -26,6 +26,7 @@ COPY Pipfile Pipfile.lock ./
 # Install the dependencies
 RUN pip install --quiet --no-cache-dir pipenv \
  && pipenv install -q --deploy --ignore-pipfile \
+ && pipenv run pip install setuptools \
  && pipenv run opentelemetry-bootstrap -a install
 
 # Copy the application code
