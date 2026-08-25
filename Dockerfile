@@ -21,7 +21,7 @@ ENV DJANGO_SETTINGS_MODULE="config.settings.production"
 WORKDIR /opt/app
 
 # Copy the requirements file
-COPY Pipfile Pipfile.lock ./
+COPY Pipfile ./
 
 # Install the dependencies (using Pipfile, CI_JOB_TOKEN provides olx-pypi access)
 RUN pip install --quiet --no-cache-dir pipenv \
