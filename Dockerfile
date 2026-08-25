@@ -31,8 +31,8 @@ RUN pip install --quiet --no-cache-dir pipenv \
 # Copy the application code
 COPY ./src /opt/app/src/
 
-# Collect static files
-RUN cd src && pipenv run python manage.py collectstatic --noinput
+# Collect static files (dummy secret for build only - real one injected at runtime)
+RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.py collectstatic --noinput
 
 # Expose the port (required by ServiceShaper)
 EXPOSE 8000
