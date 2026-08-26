@@ -36,5 +36,5 @@ RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.
 # Expose the port (required by ServiceShaper)
 EXPOSE 8000
 
-# Run the application with gunicorn + OTEL instrumentation
-ENTRYPOINT ["pipenv", "run", "opentelemetry-instrument", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
+# Run the application with gunicorn (python-otel initializes OTEL automatically)
+ENTRYPOINT ["pipenv", "run", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
