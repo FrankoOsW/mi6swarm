@@ -27,8 +27,8 @@ COPY Pipfile ./
 RUN pip install --quiet --no-cache-dir pipenv \
  && pipenv install -q
 
-# Copy the application code
-COPY ./src /opt/app/src/
+# Copy the application code (with correct ownership for collectstatic)
+COPY --chown=nobody:nobody ./src /opt/app/src/
 
 # Collect static files (dummy secret for build only - real one injected at runtime)
 RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.py collectstatic --noinput
