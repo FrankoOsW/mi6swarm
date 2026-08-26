@@ -27,8 +27,8 @@ COPY Pipfile ./
 RUN pip install --quiet --no-cache-dir pipenv \
  && pipenv install -q
 
-# Copy the application code
-COPY ./src /opt/app/src/
+# Copy the application code (--chown ensures nobody user can write staticfiles)
+COPY --chown=nobody:nobody ./src /opt/app/src/
 
 # Collect static files (dummy secret for build only - real one injected at runtime)
 RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.py collectstatic --noinput
@@ -36,5 +36,5 @@ RUN cd src && DJANGO_SECRET_KEY=build-time-placeholder pipenv run python manage.
 # Expose the port (required by ServiceShaper)
 EXPOSE 8000
 
-# Run the application with gunicorn + OTEL instrumentation
-ENTRYPOINT ["pipenv", "run", "opentelemetry-instrument", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
+# Run the application with gunicorn (python-otel auto-initializes OTEL)
+ENTRYPOINT ["pipenv", "run", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "4", "--access-logfile", "-", "--error-logfile", "-"]
