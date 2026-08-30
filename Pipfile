@@ -23,6 +23,9 @@ newrelic = "==9.11.0"
 sentry-sdk = {extras = ["django"], version = "==2.7.1"}
 python-otel = {version = "*", index = "olx-pypi"}
 
+# Auth
+mozilla-django-oidc = "==4.0.1"
+
 # Utils
 python-dotenv = "==1.0.0"
 

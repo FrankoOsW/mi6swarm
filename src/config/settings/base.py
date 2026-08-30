@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "mozilla_django_oidc",
     "core",
 ]
 
@@ -109,3 +110,25 @@ LOGGING = {
         },
     },
 }
+
+# OIDC / Okta SSO Configuration
+OKTA_DOMAIN = os.environ.get("OKTA_DOMAIN", "")
+OIDC_RP_CLIENT_ID = os.environ.get("OIDC_RP_CLIENT_ID", "")
+OIDC_RP_CLIENT_SECRET = os.environ.get("OIDC_RP_CLIENT_SECRET", "")
+
+# Okta OIDC endpoints (derived from domain)
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/authorize"
+OIDC_OP_TOKEN_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/token"
+OIDC_OP_USER_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/userinfo"
+OIDC_OP_JWKS_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/keys"
+
+# OIDC settings
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_RP_SCOPES = "openid email profile"
+
+# Redirect URLs after login/logout
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+# Where to redirect for login
+LOGIN_URL = "/oidc/authenticate/"
