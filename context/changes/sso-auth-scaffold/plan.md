@@ -395,25 +395,25 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 
 #### Automated
 
-- [x] 1.1 Pipfile lock regenerates cleanly
-- [x] 1.2 Django settings load without error
-- [x] 1.3 OIDC settings are present
+- [x] 1.1 Pipfile lock regenerates cleanly — 2f1a507
+- [x] 1.2 Django settings load without error — 2f1a507
+- [x] 1.3 OIDC settings are present — 2f1a507
 
 #### Manual
 
-- [x] 1.4 Environment variables documented in .env.example
-- [x] 1.5 Settings match Okta app configuration
+- [x] 1.4 Environment variables documented in .env.example — 2f1a507
+- [x] 1.5 Settings match Okta app configuration — 2f1a507
 
 ### Phase 2: User Model & Migrations
 
 #### Automated
 
-- [ ] 2.1 Migrations apply cleanly
-- [ ] 2.2 Auth backends configured
+- [x] 2.1 Migrations apply cleanly
+- [x] 2.2 Auth backends configured
 
 #### Manual
 
-- [ ] 2.3 Database has session and user tables
+- [x] 2.3 Database has session and user tables
 
 ### Phase 3: Auth Middleware & URLs
 

@@ -132,3 +132,9 @@ LOGOUT_REDIRECT_URL = "/"
 
 # Where to redirect for login
 LOGIN_URL = "/oidc/authenticate/"
+
+# OIDC for SSO; ModelBackend keeps Django admin / superuser password login
+AUTHENTICATION_BACKENDS = [
+    "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
