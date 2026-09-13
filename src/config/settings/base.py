@@ -28,6 +28,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "core.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -129,6 +130,8 @@ OIDC_RP_SCOPES = "openid email profile"
 # Redirect URLs after login/logout
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+# mozilla-django-oidc callback failures (see OIDCAuthenticationCallbackView.login_failure)
+LOGIN_REDIRECT_URL_FAILURE = "/auth/error/"
 
 # Where to redirect for login
 LOGIN_URL = "/oidc/authenticate/"

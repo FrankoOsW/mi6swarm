@@ -9,10 +9,8 @@ def client():
 
 def test_root(client):
     response = client.get("/")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["service"] == "mi6swarm"
-    assert data["status"] == "ok"
+    assert response.status_code == 302
+    assert response.url == "/oidc/authenticate/"
 
 
 def test_health(client):

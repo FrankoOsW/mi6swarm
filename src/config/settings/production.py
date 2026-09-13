@@ -29,3 +29,13 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+
+# OIDC settings validation - fail fast if not configured
+from django.core.exceptions import ImproperlyConfigured
+
+if not OKTA_DOMAIN:
+    raise ImproperlyConfigured("OKTA_DOMAIN environment variable is required")
+if not OIDC_RP_CLIENT_ID:
+    raise ImproperlyConfigured("OIDC_RP_CLIENT_ID environment variable is required")
+if not OIDC_RP_CLIENT_SECRET:
+    raise ImproperlyConfigured("OIDC_RP_CLIENT_SECRET environment variable is required")
