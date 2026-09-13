@@ -419,21 +419,21 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 
 #### Automated
 
-- [x] 3.1 URL routes resolve (oidc paths)
-- [x] 3.2 Middleware loads
-- [x] 3.3 Health endpoint accessible without auth
+- [x] 3.1 URL routes resolve (oidc paths) — 29d4e3f
+- [x] 3.2 Middleware loads — 29d4e3f
+- [x] 3.3 Health endpoint accessible without auth — 29d4e3f
 
 #### Manual
 
-- [x] 3.4 Unauthenticated request redirects to login
+- [x] 3.4 Unauthenticated request redirects to login — 29d4e3f
 - [ ] 3.5 /oidc/authenticate/ redirects to Okta
 
 ### Phase 4: Error Handling & UX
 
 #### Automated
 
-- [x] 4.1 Logout URL resolves
-- [x] 4.2 Error view exists
+- [x] 4.1 Logout URL resolves — 29d4e3f
+- [x] 4.2 Error view exists — 29d4e3f
 
 #### Manual
 
