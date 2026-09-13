@@ -161,3 +161,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .rendered/
+
+# macOS
+.DS_Store
+
+# Claude Code local settings (personal, not shared)
+.claude/settings.local.json
