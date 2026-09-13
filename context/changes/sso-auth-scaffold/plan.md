@@ -408,32 +408,32 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 
 #### Automated
 
-- [x] 2.1 Migrations apply cleanly
-- [x] 2.2 Auth backends configured
+- [x] 2.1 Migrations apply cleanly — a80beae
+- [x] 2.2 Auth backends configured — a80beae
 
 #### Manual
 
-- [x] 2.3 Database has session and user tables
+- [x] 2.3 Database has session and user tables — a80beae
 
 ### Phase 3: Auth Middleware & URLs
 
 #### Automated
 
-- [ ] 3.1 URL routes resolve (oidc paths)
-- [ ] 3.2 Middleware loads
-- [ ] 3.3 Health endpoint accessible without auth
+- [x] 3.1 URL routes resolve (oidc paths)
+- [x] 3.2 Middleware loads
+- [x] 3.3 Health endpoint accessible without auth
 
 #### Manual
 
-- [ ] 3.4 Unauthenticated request redirects to login
+- [x] 3.4 Unauthenticated request redirects to login
 - [ ] 3.5 /oidc/authenticate/ redirects to Okta
 
 ### Phase 4: Error Handling & UX
 
 #### Automated
 
-- [ ] 4.1 Logout URL resolves
-- [ ] 4.2 Error view exists
+- [x] 4.1 Logout URL resolves
+- [x] 4.2 Error view exists
 
 #### Manual
 
