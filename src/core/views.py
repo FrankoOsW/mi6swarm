@@ -2,6 +2,7 @@ from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 
 def health(request):
@@ -24,6 +25,7 @@ def oidc_error(request):
     )
 
 
+@require_POST
 def logout_view(request):
     logout(request)
     return redirect("/")

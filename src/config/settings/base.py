@@ -126,6 +126,7 @@ OIDC_OP_JWKS_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth2/default/v1/keys"
 # OIDC settings
 OIDC_RP_SIGN_ALGO = "RS256"
 OIDC_RP_SCOPES = "openid email profile"
+OIDC_TIMEOUT = 10
 
 # Redirect URLs after login/logout
 LOGIN_REDIRECT_URL = "/"
