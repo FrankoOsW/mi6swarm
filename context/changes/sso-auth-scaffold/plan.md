@@ -426,7 +426,7 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 #### Manual
 
 - [x] 3.4 Unauthenticated request redirects to login — 29d4e3f
-- [ ] 3.5 /oidc/authenticate/ redirects to Okta
+- [x] 3.5 /oidc/authenticate/ redirects to Okta
 
 ### Phase 4: Error Handling & UX
 
@@ -437,18 +437,18 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 
 #### Manual
 
-- [ ] 4.3 /logout clears session and redirects
-- [x] 4.4 OIDC errors show friendly message
+- [x] 4.3 /logout clears session and redirects
+- [x] 4.4 OIDC errors show friendly message — b719074
 
 ### Phase 5: Testing & Dev Bypass
 
 #### Automated
 
-- [x] 5.1 All auth tests pass
-- [x] 5.2 No bypass in production settings
+- [x] 5.1 All auth tests pass — b719074
+- [x] 5.2 No bypass in production settings — b719074
 
 #### Manual
 
-- [ ] 5.3 OIDC_BYPASS works in development
-- [x] 5.4 OIDC_BYPASS disabled blocks without Okta
-- [ ] 5.5 README documents bypass
+- [x] 5.3 OIDC_BYPASS works in development
+- [x] 5.4 OIDC_BYPASS disabled blocks without Okta — b719074
+- [x] 5.5 README documents bypass — b719074
