@@ -1,12 +1,3 @@
-import pytest
-from django.test import Client
-
-
-@pytest.fixture
-def client():
-    return Client()
-
-
 def test_root(client):
     response = client.get("/")
     assert response.status_code == 302

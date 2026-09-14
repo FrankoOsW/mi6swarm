@@ -56,3 +56,20 @@ make test
 # runs
 # pipenv run pytest -k tests
 ```
+
+Auth integration tests live in `tests/test_auth.py` (middleware, session, bypass). Production settings guards live in `tests/test_settings.py`.
+
+```console
+pipenv run pytest tests/test_auth.py tests/test_settings.py -v
+```
+
+## Local auth bypass (development only)
+
+OIDC is required in every environment except local development.
+
+To skip Okta while iterating locally, use **both**:
+
+- `DJANGO_SETTINGS_MODULE=config.settings.local` (`DEBUG=True`)
+- `OIDC_BYPASS=true` in `.env` (see `.env.example`)
+
+`LoginRequiredMiddleware` only honors the bypass when `DEBUG` is true **and** `OIDC_BYPASS` is true. Production settings (`config.settings.production`) must never define `OIDC_BYPASS`. Enabling this flag in a production or staging cluster would leave the swarm unauthenticated — do not set it outside local development.

@@ -3,7 +3,7 @@ change_id: sso-auth-scaffold
 title: SSO Auth Scaffold - Okta OIDC Integration
 status: implementing
 created: 2026-08-30
-updated: 2026-09-10
+updated: 2026-09-14
 roadmap_ref: F-01
 prd_refs:
   - FR-001

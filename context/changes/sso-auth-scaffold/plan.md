@@ -438,17 +438,17 @@ Add integration tests for auth flow and ensure the DEBUG bypass works correctly.
 #### Manual
 
 - [ ] 4.3 /logout clears session and redirects
-- [ ] 4.4 OIDC errors show friendly message
+- [x] 4.4 OIDC errors show friendly message
 
 ### Phase 5: Testing & Dev Bypass
 
 #### Automated
 
-- [ ] 5.1 All auth tests pass
-- [ ] 5.2 No bypass in production settings
+- [x] 5.1 All auth tests pass
+- [x] 5.2 No bypass in production settings
 
 #### Manual
 
 - [ ] 5.3 OIDC_BYPASS works in development
-- [ ] 5.4 OIDC_BYPASS disabled blocks without Okta
+- [x] 5.4 OIDC_BYPASS disabled blocks without Okta
 - [ ] 5.5 README documents bypass

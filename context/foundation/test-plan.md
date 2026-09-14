@@ -101,11 +101,19 @@ orchestrator parser.
 
 ### 6.1 Adding a unit or settings test
 
-- TBD — see §3 Phase 1 (auth & settings floor).
+- **Location:** `tests/test_settings.py` (and sibling `tests/test_*.py` at repo root).
+- **Naming:** `test_<behavior>_when_<condition>` (pytest functions, not Django `TestCase` classes unless DB is required).
+- **Reference:** `tests/test_settings.py` — production fail-fast for missing Okta env; file-level assertion that `production.py` does not mention `OIDC_BYPASS`.
+- **Run:** `pipenv run pytest tests/test_settings.py -v`
+- **Pattern:** isolate production settings with a subprocess + `DJANGO_SETTINGS_MODULE=config.settings.production` so the already-configured test process is not mutated. Do not import `config.settings.production` into the pytest process.
 
 ### 6.2 Adding a Django integration test (auth)
 
-- TBD — see §3 Phase 1.
+- **Location:** `tests/test_auth.py` (CI collects `tests/*` only — do not put pytest files under `src/core/tests/`).
+- **Naming:** `test_<behavior>`; fixtures `anonymous_client` and `authenticated_client` in `tests/conftest.py`.
+- **Reference:** `tests/test_auth.py` — unauthenticated `/` → `/oidc/authenticate/`; `/health` public; `force_login` session on `/`; `OIDC_BYPASS` only with `DEBUG=True`; `/logout/` clears session.
+- **Run:** `pipenv run pytest tests/test_auth.py -v`
+- **Pattern:** pytest-django `Client` + `force_login`. Use `@override_settings` for the DEBUG × bypass matrix. Do not mock mozilla-django-oidc internals; do not treat a 302 on `/` as proof that the Okta callback works.
 
 ### 6.3 Adding a test for a new JSON API endpoint
 
