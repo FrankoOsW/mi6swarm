@@ -72,15 +72,19 @@ def _is_refusal(result) -> bool:
         refused = data.get("refusal")
     if isinstance(refused, str):
         return bool(refused.strip())
-    if refused:
-        return True
-    if data.get("error"):
-        return True
-    return False
+    return bool(refused)
+
+
+def _has_transport_error(result) -> bool:
+    return bool(_result_mapping(result).get("error"))
 
 
 def _is_successful_grounded(result) -> bool:
-    return (not _is_refusal(result)) and bool(_text(result).strip())
+    return (
+        not _is_refusal(result)
+        and not _has_transport_error(result)
+        and bool(_text(result).strip())
+    )
 
 
 def _completion(content: str):
@@ -107,7 +111,9 @@ class TestAnswerQualityContract:
             mock_create.return_value = _completion(GROUNDED_PARAPHRASE)
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
+        mock_create.assert_called()
         assert not _is_refusal(result)
+        assert not _has_transport_error(result)
         assert set(_source_ids(result)) <= set(case["allowed_source_ids"])
         for fact in case["supported_facts"]:
             assert claim_present(_text(result), fact)
@@ -122,6 +128,7 @@ class TestAnswerQualityContract:
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
         assert _is_refusal(result)
+        assert not _has_transport_error(result)
         assert not _is_successful_grounded(result)
         assert claims_violated(_text(result), case) == []
         assert _source_ids(result) == []
@@ -135,6 +142,7 @@ class TestAnswerQualityContract:
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
         assert _is_refusal(result)
+        assert not _has_transport_error(result)
         assert not _is_successful_grounded(result)
         assert claims_violated(_text(result), case) == []
 
@@ -144,6 +152,7 @@ class TestAnswerQualityContract:
             mock_create.return_value = _completion(MIXED_COMPLETION)
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
+        mock_create.assert_called()
         assert not _is_successful_grounded(result)
         assert claims_violated(_text(result), case) == []
 
@@ -153,6 +162,7 @@ class TestAnswerQualityContract:
             mock_create.side_effect = TimeoutError("gaip-timeout")
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
+        mock_create.assert_called()
         assert not _is_successful_grounded(result)
         assert claims_violated(_text(result), case) == []
 
@@ -162,6 +172,7 @@ class TestAnswerQualityContract:
             mock_create.side_effect = PermissionError("401 Unauthorized")
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
+        mock_create.assert_called()
         assert not _is_successful_grounded(result)
         assert claims_violated(_text(result), case) == []
 
@@ -169,6 +180,7 @@ class TestAnswerQualityContract:
             mock_create.return_value = {"not": "a chat completion"}
             result = SUBMIT_QUESTION(case["question"], case["evidence"])
 
+        mock_create.assert_called()
         assert not _is_successful_grounded(result)
         assert "not a chat completion" not in _text(result).casefold()
 

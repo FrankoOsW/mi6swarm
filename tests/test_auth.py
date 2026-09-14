@@ -2,6 +2,10 @@ import pytest
 from django.test import override_settings
 from unittest.mock import patch
 
+from core.middleware import EXEMPT_PATHS
+
+LOGIN_EXEMPT_PATHS = frozenset({"/health", "/health/", "/auth/error/", "/logout/"})
+
 
 def test_unauthenticated_request_redirects_to_login(anonymous_client):
     response = anonymous_client.get("/")
@@ -13,6 +17,10 @@ def test_health_endpoint_accessible_without_auth(anonymous_client):
     response = anonymous_client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
+
+
+def test_login_exempt_paths_are_frozen():
+    assert EXEMPT_PATHS == LOGIN_EXEMPT_PATHS
 
 
 def test_authenticated_request_returns_200(authenticated_client):

@@ -3,7 +3,7 @@ project: "10xMI6Swarm"
 version: 1
 status: draft
 created: 2026-08-29
-updated: 2026-08-31
+updated: 2026-09-14
 prd_version: 1
 main_goal: quality
 top_blocker: decisions
@@ -40,7 +40,7 @@ Data Analysts at OLX waste hours searching scattered sources (GitLab ETL code, C
 | ID   | Change ID                  | Outcome (user can ...)                                                      | Prerequisites | PRD refs                         | Status   |
 | ---- | -------------------------- | --------------------------------------------------------------------------- | ------------- | -------------------------------- | -------- |
 | F-01 | sso-auth-scaffold          | (foundation) log in via OLX SSO                                             | —             | FR-001, Access Control           | in-progress |
-| S-01 | first-gated-answer         | ask a question and receive a sourced answer from one specialist             | F-01          | FR-002, FR-003, FR-005, FR-006, US-01 | proposed |
+| S-01 | first-gated-answer         | ask a question and receive a sourced answer from one specialist             | F-01          | FR-002, FR-003, FR-005, FR-006, US-01 | in-progress |
 | S-02 | conversation-followups     | ask follow-up questions in the same conversation                            | S-01          | FR-007                           | proposed |
 | S-03 | supervisor-routing         | ask about Traffic OR autoplac.pl and get routed to the right specialist     | S-01          | FR-004, US-01                    | proposed |
 | S-04 | clarifying-questions       | receive a clarifying question when query spans multiple domains             | S-03          | FR-010, US-01                    | proposed |
@@ -97,7 +97,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Which knowledge sources to index for the first specialist (GitLab repos, Confluence spaces, vendor docs)? — Owner: user. Block: no (can build pipeline with test data; real sources needed before launch).
 - **Risk:** This is the north star — the smallest proof that the product hypothesis works. If knowledge synthesis doesn't produce accurate, sourced answers here, the entire product is invalidated. Quality goal means we invest deeply in prompt engineering and retrieval quality.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-02: Conversation follow-ups
 
