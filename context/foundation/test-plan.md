@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-09-11
+> Last updated: 2026-09-14
 
 ## 1. Strategy
 
@@ -67,8 +67,8 @@ orchestrator parser.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
-| 1 | Auth & settings floor | Finish SSO test debt + prod settings guards; establish pytest patterns | #2, #3, #4, #5 | pytest-django integration, settings tests | implementing | sso-auth-scaffold |
-| 2 | Gated answer quality | Grounding, refusal, and session boundaries for first Q&A slice | #1 (+ authorization when API exists) | contract + integration with fixtures | researched | first-gated-answer |
+| 1 | Auth & settings floor | Finish SSO test debt + prod settings guards; establish pytest patterns | #2, #3, #4, #5 | pytest-django integration, settings tests | complete | sso-auth-scaffold |
+| 2 | Gated answer quality | Grounding, refusal, and session boundaries for first Q&A slice | #1 (+ authorization when API exists) | contract + integration with fixtures | planned | first-gated-answer |
 
 ## 4. Stack
 
@@ -117,13 +117,22 @@ orchestrator parser.
 
 ### 6.3 Adding a test for a new JSON API endpoint
 
-- TBD — see §3 Phase 2 (gated answer quality).
+- **Location:** `tests/test_answer_quality.py`, `tests/test_answer_quality_fixtures.py`, `tests/fixtures/answer_quality/`, `tests/support/answer_surface.py`.
+- **Naming:** `test_<behavior>_when_<condition>`; fixture ids kebab-case.
+- **Reference:** `tests/test_answer_quality.py` — mixed-invention (`test_rejects_grounded_success_when_completion_mixes_invented_retention`); anonymous redirect (`test_redirects_to_login_when_anonymous`); CSRF 403 (`test_returns_403_when_authenticated_without_csrf`).
+- **Run:** `pipenv run pytest tests/test_answer_quality_fixtures.py tests/test_answer_quality.py -v`
+- **Pattern:** Hand-author `supported_facts` / `forbidden_facts` from evidence (not from model prose). Skip contract/HTTP cases when `answer_surface_available()` is false (`reason="answer-surface-missing"`). Mock GAIP `chat.completions` at `GAIP_CHAT_COMPLETIONS_PATCH_TARGET`. Use `Client(enforce_csrf_checks=True)` for session POST. Never add the answer path to `EXEMPT_PATHS`.
+- **When NOT to use (AI-native):** LLM-as-judge / live model — **checked: 2026-09-14**. Use only if a deterministic claim/provenance check cannot express the failure; not for this gate.
 
 ### 6.4 Per-rollout-phase notes
 
 - **Lean rollout (2026-09-11):** Phase 1 delivery continues in existing
   `sso-auth-scaffold` (plan Phase 5 testing + remaining auth sub-phases).
   Phase 2 reuses `first-gated-answer` research; plan when SSO floor is green.
+- **Phase 2 harness (2026-09-14):** Fixture oracle + skip-gated contract/HTTP
+  suite shipped. Do not mark §3 Phase 2 `complete` until those tests run
+  unskipped against production-path code (still not a stub). `research.md`
+  auth paragraphs remain historically stale (SSO middleware is live).
 
 ## 7. What We Deliberately Don't Test
 
