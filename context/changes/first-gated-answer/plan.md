@@ -318,11 +318,11 @@ When the product slice lands, fill `tests/support/answer_surface.py` in **that**
 
 #### Automated
 
-- [x] 3.1 `rg "TBD — see §3 Phase 2" context/foundation/test-plan.md` finds no matches
-- [x] 3.2 §6.3 contains Location, Naming, Reference, Run, Pattern
-- [x] 3.3 `pipenv run pytest tests/ -v` still passes
+- [x] 3.1 `rg "TBD — see §3 Phase 2" context/foundation/test-plan.md` finds no matches — 09fc013
+- [x] 3.2 §6.3 contains Location, Naming, Reference, Run, Pattern — 09fc013
+- [x] 3.3 `pipenv run pytest tests/ -v` still passes — 09fc013
 
 #### Manual
 
-- [x] 3.4 A teammate could add a fifth fixture case from §6.3 alone
-- [x] 3.5 §1–§5 risk map text is unchanged except any Status cell the implementer is explicitly allowed to touch
+- [x] 3.4 A teammate could add a fifth fixture case from §6.3 alone — 09fc013
+- [x] 3.5 §1–§5 risk map text is unchanged except any Status cell the implementer is explicitly allowed to touch — 09fc013
