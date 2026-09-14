@@ -175,6 +175,11 @@ def load_all_cases(corpus_dir: Path | None = None) -> dict[str, dict[str, Any]]:
     return cases
 
 
+def claim_present(text: str, fact: str) -> bool:
+    """Return True if ``fact`` appears in ``text`` after normalization."""
+    return _normalize(fact) in _normalize(text)
+
+
 def claims_violated(answer_text: str, case: Mapping[str, Any]) -> list[str]:
     """Return forbidden facts that appear in answer text.
 
@@ -188,5 +193,4 @@ def claims_violated(answer_text: str, case: Mapping[str, Any]) -> list[str]:
     Returns:
         Forbidden claim strings found in ``answer_text``, in fixture order.
     """
-    haystack = _normalize(answer_text)
-    return [fact for fact in case["forbidden_facts"] if _normalize(fact) in haystack]
+    return [fact for fact in case["forbidden_facts"] if claim_present(answer_text, fact)]

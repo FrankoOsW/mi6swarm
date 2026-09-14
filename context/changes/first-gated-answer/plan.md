@@ -285,34 +285,34 @@ When the product slice lands, fill `tests/support/answer_surface.py` in **that**
 
 #### Automated
 
-- [x] 1.1 Fixture files exist under `tests/fixtures/answer_quality/` with the four required cases
-- [x] 1.2 Loader rejects a deliberately incomplete fixture in a unit test
-- [x] 1.3 `pipenv run pytest tests/test_answer_quality_fixtures.py -v` passes
-- [x] 1.4 `pipenv run pytest tests/ -v` still passes
-- [x] 1.5 `pipenv run ruff check tests/` passes
+- [x] 1.1 Fixture files exist under `tests/fixtures/answer_quality/` with the four required cases — 425d562
+- [x] 1.2 Loader rejects a deliberately incomplete fixture in a unit test — 425d562
+- [x] 1.3 `pipenv run pytest tests/test_answer_quality_fixtures.py -v` passes — 425d562
+- [x] 1.4 `pipenv run pytest tests/ -v` still passes — 425d562
+- [x] 1.5 `pipenv run ruff check tests/` passes — 425d562
 
 #### Manual
 
-- [x] 1.6 Open `weekly-refresh-grounded` and confirm `forbidden_facts` were written from the author’s intent, not from a model transcript
-- [x] 1.7 Confirm no fixture file contains a full expected answer paragraph copied from a chat completion
+- [x] 1.6 Open `weekly-refresh-grounded` and confirm `forbidden_facts` were written from the author’s intent, not from a model transcript — 425d562
+- [x] 1.7 Confirm no fixture file contains a full expected answer paragraph copied from a chat completion — 425d562
 
 ### Phase 2: Conditional answer-quality suite
 
 #### Automated
 
-- [ ] 2.1 `pipenv run pytest tests/test_answer_quality.py -v` exits 0; when surface is absent, collected tests skip with `answer-surface-missing` (not pass)
-- [ ] 2.2 `pipenv run pytest tests/test_answer_quality.py -v` does not skip fixture self-tests in Phase 1 files
-- [ ] 2.3 A unit test of the skip helper proves `answer_surface_available()` is False in this repo state
-- [ ] 2.4 `pipenv run pytest tests/ -v` passes
-- [ ] 2.5 `pipenv run ruff check tests/` passes
-- [ ] 2.6 No production `src/` answer view or GAIP client added by this phase
-- [ ] 2.7 `EXEMPT_PATHS` in `src/core/middleware.py` unchanged
+- [x] 2.1 `pipenv run pytest tests/test_answer_quality.py -v` exits 0; when surface is absent, collected tests skip with `answer-surface-missing` (not pass)
+- [x] 2.2 `pipenv run pytest tests/test_answer_quality.py -v` does not skip fixture self-tests in Phase 1 files
+- [x] 2.3 A unit test of the skip helper proves `answer_surface_available()` is False in this repo state
+- [x] 2.4 `pipenv run pytest tests/ -v` passes
+- [x] 2.5 `pipenv run ruff check tests/` passes
+- [x] 2.6 No production `src/` answer view or GAIP client added by this phase
+- [x] 2.7 `EXEMPT_PATHS` in `src/core/middleware.py` unchanged
 
 #### Manual
 
-- [ ] 2.8 Confirm skipped tests are not reported as passed protection for Risk #1
-- [ ] 2.9 Confirm no new URL was registered solely to unskip the suite
-- [ ] 2.10 Spot-check mixed-invention assertions: a successful grounded payload containing “90 days” would fail
+- [x] 2.8 Confirm skipped tests are not reported as passed protection for Risk #1
+- [x] 2.9 Confirm no new URL was registered solely to unskip the suite
+- [x] 2.10 Spot-check mixed-invention assertions: a successful grounded payload containing “90 days” would fail
 
 ### Phase 3: Cookbook completion
 
