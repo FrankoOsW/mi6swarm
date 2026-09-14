@@ -1,0 +1,20 @@
+{
+  "id": "weekly-refresh-grounded",
+  "question": "How often does Dataset A refresh?",
+  "evidence": [
+    {
+      "source_id": "fixture://dataset-a/catalog-note",
+      "text": "Dataset A is refreshed every week. The catalog note does not describe a retention window."
+    }
+  ],
+  "expected": "grounded",
+  "supported_facts": [
+    "Dataset A is refreshed every week"
+  ],
+  "forbidden_facts": [
+    "Dataset A retains data for 90 days"
+  ],
+  "allowed_source_ids": [
+    "fixture://dataset-a/catalog-note"
+  ]
+}

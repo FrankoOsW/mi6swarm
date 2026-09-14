@@ -1,0 +1,11 @@
+{
+  "id": "empty-evidence-refuse",
+  "question": "How often does Dataset A refresh?",
+  "evidence": [],
+  "expected": "refuse",
+  "supported_facts": [],
+  "forbidden_facts": [
+    "Dataset A retains data for 90 days"
+  ],
+  "allowed_source_ids": []
+}

@@ -1,0 +1,17 @@
+{
+  "id": "irrelevant-evidence-refuse",
+  "question": "How often does Dataset A refresh?",
+  "evidence": [
+    {
+      "source_id": "fixture://dataset-a/ownership-page",
+      "text": "Dataset A is owned by the billing analytics squad and powers the monthly invoice dashboard. Contact the squad for access requests."
+    }
+  ],
+  "expected": "refuse",
+  "supported_facts": [],
+  "forbidden_facts": [
+    "Dataset A is refreshed every week",
+    "Dataset A retains data for 90 days"
+  ],
+  "allowed_source_ids": []
+}
